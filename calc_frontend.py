@@ -2,6 +2,7 @@ import streamlit as st
 import json
 import datetime
 from os import getcwd, chdir, path
+import pandas
 
 class BrokerageCalculator:
     def __init__(self, buyPrice, sellPrice, qty):
