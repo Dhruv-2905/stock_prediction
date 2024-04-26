@@ -182,77 +182,8 @@ class BrokerageCalculator:
 
 def main():
     st.title("Brokerage Calculator")
-
-    # with st.container():
-    #     st.markdown("<div class='transaction-container'>", unsafe_allow_html=True)
-    #     with st.columns(4):
-    #         with st.expander("Intraday"):
-    #             buy_price_1 = st.number_input("Enter Buy Price", key="buy_price_1")
-    #             sell_price_1 = st.number_input("Enter Sell Price", key="sell_price_1")
-    #             qty_1 = st.number_input("Enter Quantity", step=1, value=1, key="qty_1")
-    #             calc_1 = BrokerageCalculator(buy_price_1, sell_price_1, qty_1)
-    #             calc_1.intradayEquity()
-    #         with st.expander("Delivery"):
-    #             buy_price_2 = st.number_input("Enter Buy Price", key="buy_price_2")
-    #             sell_price_2 = st.number_input("Enter Sell Price", key="sell_price_2")
-    #             qty_2 = st.number_input("Enter Quantity", step=1, value=1, key="qty_2")
-    #             calc_2 = BrokerageCalculator(buy_price_2, sell_price_2, qty_2)
-    #             calc_2.deliveryEquity()
-    #         with st.expander("Delivery (Cash+)"):
-    #             buy_price_3 = st.number_input("Enter Buy Price", key="buy_price_3")
-    #             sell_price_3 = st.number_input("Enter Sell Price", key="sell_price_3")
-    #             qty_3 = st.number_input("Enter Quantity", step=1, value=1, key="qty_3")
-    #             days_3 = st.number_input("Enter Number of Days", step=1, value=1, key="days_3")
-    #             calc_3 = BrokerageCalculator(buy_price_3, sell_price_3, qty_3)
-    #             calc_3.deliveryEquity(days=days_3, isCashPlus=True)
-    #         with st.expander("Options"):
-    #             buy_price_4 = st.number_input("Enter Buy Price", key="buy_price_4")
-    #             sell_price_4 = st.number_input("Enter Sell Price", key="sell_price_4")
-    #             qty_4 = st.number_input("Enter Quantity", step=1, value=1, key="qty_4")
-    #             calc_4 = BrokerageCalculator(buy_price_4, sell_price_4, qty_4)
-    #             calc_4.options()
-    #     st.markdown("</div>", unsafe_allow_html=True)
+    
     col1, col2, col3, col4 = st.columns(4)
-
-    # with col1:
-    #     st.markdown("<div class='transaction-container'>", unsafe_allow_html=True)
-    #     with st.expander("Intraday"):
-    #         buy_price_1 = st.number_input("Enter Buy Price", key="buy_price_1")
-    #         sell_price_1 = st.number_input("Enter Sell Price", key="sell_price_1")
-    #         qty_1 = st.number_input("Enter Quantity", step=1, value=1, key="qty_1")
-    #         # Add your calculation logic here
-    #     st.markdown("</div>", unsafe_allow_html=True)
-
-    # with col2:
-    #     st.markdown("<div class='transaction-container'>", unsafe_allow_html=True)
-    #     with st.expander("Delivery"):
-    #         buy_price_2 = st.number_input("Enter Buy Price", key="buy_price_2")
-    #         sell_price_2 = st.number_input("Enter Sell Price", key="sell_price_2")
-    #         qty_2 = st.number_input("Enter Quantity", step=1, value=1, key="qty_2")
-    #         # Add your calculation logic here
-    #     st.markdown("</div>", unsafe_allow_html=True)
-
-    # with col3:
-    #     st.markdown("<div class='transaction-container'>", unsafe_allow_html=True)
-    #     with st.expander("Delivery (Cash+)"):
-    #         buy_price_3 = st.number_input("Enter Buy Price", key="buy_price_3")
-    #         sell_price_3 = st.number_input("Enter Sell Price", key="sell_price_3")
-    #         qty_3 = st.number_input("Enter Quantity", step=1, value=1, key="qty_3")
-    #         # Add your calculation logic here
-    #     st.markdown("</div>", unsafe_allow_html=True)
-
-    # with col4:
-    #     st.markdown("<div class='transaction-container'>", unsafe_allow_html=True)
-    #     with st.expander("Options"):
-    #         buy_price_4 = st.number_input("Enter Buy Price", key="buy_price_4")
-    #         sell_price_4 = st.number_input("Enter Sell Price", key="sell_price_4")
-    #         qty_4 = st.number_input("Enter Quantity", step=1, value=1, key="qty_4")
-    #         # Add your calculation logic here
-    #     st.markdown("</div>", unsafe_allow_html=True)
-    
-    
-    
-    
     
     with col1:
         with stylable_container(
@@ -279,82 +210,84 @@ def main():
                     calc_1.intradayEquity()
 
     with col2:
-        #st.markdown("<div class='transaction-container'>", unsafe_allow_html=True)
-        with st.expander("Delivery"):
-            buy_price_2 = st.number_input("Enter Buy Price", key="buy_price_2")
-            sell_price_2 = st.number_input("Enter Sell Price", key="sell_price_2")
-            qty_2 = st.number_input("Enter Quantity", step=1, value=1, key="qty_2")
-            if st.button("Calculate 2", key="calculate_2"):
-                calc_2 = BrokerageCalculator(buy_price_2,sell_price_2,qty_2)
-                calc_2.deliveryEquity()
-        st.markdown("</div>", unsafe_allow_html=True)
+        
+        with stylable_container(
+        key='column2',
+        css_styles=""" 
+            {
+                
+                border: 0.25px solid #009688;
+                border-radius: 10px;
+                padding: 0px;
+                margin-bottom: 30px;
+                background-color: #f0f0f0;
+                animation: spin 10s linear infinite;
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            """,
+            ):
+
+            with st.expander("Delivery"):
+                buy_price_2 = st.number_input("Enter Buy Price", key="buy_price_2")
+                sell_price_2 = st.number_input("Enter Sell Price", key="sell_price_2")
+                qty_2 = st.number_input("Enter Quantity", step=1, value=1, key="qty_2")
+                if st.button("Calculate 2", key="calculate_2"):
+                    calc_2 = BrokerageCalculator(buy_price_2,sell_price_2,qty_2)
+                    calc_2.deliveryEquity()
+
 
     with col3:
-        #st.markdown("<div class='transaction-container'>", unsafe_allow_html=True)
-        with st.expander("Delivery (Cash+)"):
-            buy_price_3 = st.number_input("Enter Buy Price", key="buy_price_3")
-            sell_price_3 = st.number_input("Enter Sell Price", key="sell_price_3")
-            qty_3 = st.number_input("Enter Quantity", step=1, value=1, key="qty_3")
-            days_3 = st.number_input("Enter Number of Days", step=1, value=1, key="days_3")
-            if st.button("Calculate 3", key="calculate_3"):
-                calc_3 = BrokerageCalculator(buy_price_3, sell_price_3, qty_3)
-                calc_3.deliveryEquity(days= days_3, isCashPlus=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+        with stylable_container(
+            key='column3',
+            css_styles=""" 
+            {
+                
+                border: 0.25px solid #009688;
+                border-radius: 10px;
+                padding: 0px;
+                margin-bottom: 30px;
+                background-color: #f0f0f0;
+                animation: spin 10s linear infinite;
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            """,
+            ):    
+        
+            with st.expander("Delivery (Cash+)"):
+                buy_price_3 = st.number_input("Enter Buy Price", key="buy_price_3")
+                sell_price_3 = st.number_input("Enter Sell Price", key="sell_price_3")
+                qty_3 = st.number_input("Enter Quantity", step=1, value=1, key="qty_3")
+                days_3 = st.number_input("Enter Number of Days", step=1, value=1, key="days_3")
+                if st.button("Calculate 3", key="calculate_3"):
+                    calc_3 = BrokerageCalculator(buy_price_3, sell_price_3, qty_3)
+                    calc_3.deliveryEquity(days= days_3, isCashPlus=True)
+        
 
     with col4:
-        #st.markdown("<div class='transaction-container'>", unsafe_allow_html=True)
-        with st.expander("Options"):
-
-            buy_price_4 = st.number_input("Enter Buy Price", key="buy_price_4")
-            sell_price_4 = st.number_input("Enter Sell Price", key="sell_price_4")
-            qty_4 = st.number_input("Enter Quantity", step=1, value=1, key="qty_4")
-            if st.button("Calculate 4", key="calculate_4"):
-                calc_4 = BrokerageCalculator(buy_price_4, sell_price_4, qty_4)
-                calc_4.options()
+        with stylable_container(
+            key='column4',
+            css_styles=""" 
+            {
                 
-        st.markdown("</div>", unsafe_allow_html=True)
-    
-    
-    
-    
+                border: 0.25px solid #009688;
+                border-radius: 10px;
+                padding: 0px;
+                margin-bottom: 30px;
+                background-color: #f0f0f0;
+                animation: spin 10s linear infinite;
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            """,
+            ):
+            with st.expander("Options"):
 
-    # with st.expander("Intraday", expanded=False):
-    #     st.markdown("<div class='transaction-container'>", unsafe_allow_html=True)
-    #     buy_price_1 = st.number_input("Enter Buy Price", key="buy_price_1")
-    #     sell_price_1 = st.number_input("Enter Sell Price", key="sell_price_1")
-    #     qty_1 = st.number_input("Enter Quantity", step=1, value=1, key="qty_1")
-    #     if st.button("Calculate 1", key="calculate_1"):
-    #         calc_1 = BrokerageCalculator(buy_price_1, sell_price_1, qty_1)
-    #         calc_1.intradayEquity()
-    #     st.markdown("</div>", unsafe_allow_html=True)
+                buy_price_4 = st.number_input("Enter Buy Price", key="buy_price_4")
+                sell_price_4 = st.number_input("Enter Sell Price", key="sell_price_4")
+                qty_4 = st.number_input("Enter Quantity", step=1, value=1, key="qty_4")
+                if st.button("Calculate 4", key="calculate_4"):
+                    calc_4 = BrokerageCalculator(buy_price_4, sell_price_4, qty_4)
+                    calc_4.options()
 
-    # with st.expander("Delivery", expanded=False):
-    #     st.markdown("<div class='transaction-column'>", unsafe_allow_html=True)
-    #     buy_price_2 = st.number_input("Enter Buy Price", key="buy_price_2")
-    #     sell_price_2 = st.number_input("Enter Sell Price", key="sell_price_2")
-    #     qty_2 = st.number_input("Enter Quantity", step=1, value=1, key="qty_2")
-    #     if st.button("Calculate 2", key="calculate_2"):
-    #         st.write("Calculate delivery logic here")
-    #     st.markdown("</div>", unsafe_allow_html=True)
-
-    # with st.expander("Delivery (Cash+)", expanded=False):
-    #     st.markdown("<div class='transaction-column'>", unsafe_allow_html=True)
-    #     buy_price_3 = st.number_input("Enter Buy Price", key="buy_price_3")
-    #     sell_price_3 = st.number_input("Enter Sell Price", key="sell_price_3")
-    #     qty_3 = st.number_input("Enter Quantity", step=1, value=1, key="qty_3")
-    #     if st.button("Calculate 3", key="calculate_3"):
-    #         st.write("Calculate delivery (Cash+) logic here")
-    #     st.markdown("</div>", unsafe_allow_html=True)
-
-    # with st.expander("Options", expanded=False):
-    #     st.markdown("<div class='transaction-column'>", unsafe_allow_html=True)
-    #     buy_price_4 = st.number_input("Enter Buy Price", key="buy_price_4")
-    #     sell_price_4 = st.number_input("Enter Sell Price", key="sell_price_4")
-    #     qty_4 = st.number_input("Enter Quantity", step=1, value=1, key="qty_4")
-    #     if st.button("Calculate 4", key="calculate_4"):
-    #         calc_4 = BrokerageCalculator(buy_price_4, sell_price_4, qty_4)
-    #         calc_4.options()
-    #     st.markdown("</div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
