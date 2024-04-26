@@ -4,56 +4,32 @@ import json
 import datetime
 from os import getcwd, chdir, path
 
-st.markdown("""
-    <style>
-        .header-text {
-            color: #009688;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .input-container {
-            background-color: #f0f0f0;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .input-label {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        .output-container {
-            background-color: #fafafa;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .output-label {
-            font-size: 18px;
-            font-weight: bold;
-            color: #009688;
-            margin-bottom: 5px;
-        }
+import base64
 
-        .transaction-container {
-            border: 2px solid #009688;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-            background-color: #f0f0f0;
-            animation: spin 10s linear infinite;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .column-style {
-            background-color: lightblue;
-            border: 1px solid blue;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
-""", unsafe_allow_html=True)
+@st.cache_data
+def get_img_as_base64(file):
+    with open(file,'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+img = get_img_as_base64("image4.jpg")
+
+
+
+page_bg_img = f'''
+<style>
+[data-testid='stAppViewContainer']{{
+background-image: url("data:image/png;base64,{img}");
+background-size = cover;
+}}
+[data-testid='stHeader']{{
+    background: rgba(0,0,0,0)
+}}
+[data-testid="stToolbar]{{
+    right: 2rem;
+}}
+</style>
+'''
+st.markdown(page_bg_img, unsafe_allow_html=True)
 
 class BrokerageCalculator:
     def __init__(self, buyPrice, sellPrice, qty):
@@ -180,41 +156,57 @@ class BrokerageCalculator:
         st.write(f"Points to break even: {pointsToBreakeven}")
         st.write(f"Net profit: {self.netProfit}")
 
-def main():
-    st.title("Brokerage Calculator")
-    
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        with stylable_container(
-            key='column1',
-            css_styles=""" 
-            {
-                
-                border: 0.25px solid #009688;
-                border-radius: 10px;
-                padding: 0px;
-                margin-bottom: 30px;
-                background-color: #f0f0f0;
-                animation: spin 10s linear infinite;
-                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-            }
-            """,
-            ):
-            with st.expander("Intraday", expanded=False,):
-                buy_price_1 = st.number_input("Enter Buy Price", key="buy_price_1")
-                sell_price_1 = st.number_input("Enter Sell Price", key="sell_price_1")
-                qty_1 = st.number_input("Enter Quantity", step=1, value=1, key="qty_1")
-                if st.button("Calculate 1", key="calculate_1"):
-                    calc_1 = BrokerageCalculator(buy_price_1, sell_price_1, qty_1)
-                    calc_1.intradayEquity()
-
-    with col2:
-        
-        with stylable_container(
-        key='column2',
+    with stylable_container(
+        key='background',
         css_styles=""" 
             {
+                text-align: center; 
+                background-image: url('stocks.jpg');
+                background-size: cover; 
+                background-position: center;
+                color: white;
+                box-shadow: 8px 8px 20px rgba(2, 2, 2, 0.2);
+            }
+            """,
+            ):
+
+        def main():
+            with stylable_container(
+        key='heading',
+        css_styles=""" 
+            {
+                text-align: center;
+            }
+            """,
+            ):
+        
+                st.title("Brokerage Calculator")
+    
+            with stylable_container(
+            key='heading2',
+            css_styles=""" 
+            {
+                
+                border: 3px solid #009688;
+                border-radius: 10px;
+                padding: 10px;
+                margin-bottom: 30px;
+                background-color: #f0f0f0;
+                animation: spin 10s linear infinite;
+                box-shadow: 8px 8px 20px rgba(2, 2, 2, 0.2);
+            }
+            """,
+            ):
+        
+
+    
+                col1, col2, col3, col4 = st.columns(4)
+    
+                with col1:
+                    with stylable_container(
+                key='column1',
+                css_styles=""" 
+            {
                 
                 border: 0.25px solid #009688;
                 border-radius: 10px;
@@ -226,20 +218,45 @@ def main():
             }
             """,
             ):
+                        with st.expander("Intraday", expanded=False,):
+                            buy_price_1 = st.number_input("Enter Buy Price", key="buy_price_1")
+                            sell_price_1 = st.number_input("Enter Sell Price", key="sell_price_1")
+                            qty_1 = st.number_input("Enter Quantity", step=1, value=1, key="qty_1")
+                            if st.button("Calculate 1", key="calculate_1"):
+                                calc_1 = BrokerageCalculator(buy_price_1, sell_price_1, qty_1)
+                                calc_1.intradayEquity()
 
-            with st.expander("Delivery"):
-                buy_price_2 = st.number_input("Enter Buy Price", key="buy_price_2")
-                sell_price_2 = st.number_input("Enter Sell Price", key="sell_price_2")
-                qty_2 = st.number_input("Enter Quantity", step=1, value=1, key="qty_2")
-                if st.button("Calculate 2", key="calculate_2"):
-                    calc_2 = BrokerageCalculator(buy_price_2,sell_price_2,qty_2)
-                    calc_2.deliveryEquity()
+                with col2:
+        
+                    with stylable_container(
+                    key='column2',
+                    css_styles=""" 
+                    {
+                
+                        border: 0.25px solid #009688;
+                        border-radius: 10px;
+                        padding: 0px;
+                        margin-bottom: 30px;
+                        background-color: #f0f0f0;
+                        animation: spin 10s linear infinite;
+                        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            """,
+            ):
+
+                        with st.expander("Delivery"):
+                            buy_price_2 = st.number_input("Enter Buy Price", key="buy_price_2")
+                            sell_price_2 = st.number_input("Enter Sell Price", key="sell_price_2")
+                            qty_2 = st.number_input("Enter Quantity", step=1, value=1, key="qty_2")
+                            if st.button("Calculate 2", key="calculate_2"):
+                                calc_2 = BrokerageCalculator(buy_price_2,sell_price_2,qty_2)
+                                calc_2.deliveryEquity()
 
 
-    with col3:
-        with stylable_container(
-            key='column3',
-            css_styles=""" 
+                with col3:
+                    with stylable_container(
+                key='column3',
+                css_styles=""" 
             {
                 
                 border: 0.25px solid #009688;
@@ -253,20 +270,20 @@ def main():
             """,
             ):    
         
-            with st.expander("Delivery (Cash+)"):
-                buy_price_3 = st.number_input("Enter Buy Price", key="buy_price_3")
-                sell_price_3 = st.number_input("Enter Sell Price", key="sell_price_3")
-                qty_3 = st.number_input("Enter Quantity", step=1, value=1, key="qty_3")
-                days_3 = st.number_input("Enter Number of Days", step=1, value=1, key="days_3")
-                if st.button("Calculate 3", key="calculate_3"):
-                    calc_3 = BrokerageCalculator(buy_price_3, sell_price_3, qty_3)
-                    calc_3.deliveryEquity(days= days_3, isCashPlus=True)
+                        with st.expander("Delivery (Cash+)"):
+                            buy_price_3 = st.number_input("Enter Buy Price", key="buy_price_3")
+                            sell_price_3 = st.number_input("Enter Sell Price", key="sell_price_3")
+                            qty_3 = st.number_input("Enter Quantity", step=1, value=1, key="qty_3")
+                            days_3 = st.number_input("Enter Number of Days", step=1, value=1, key="days_3")
+                            if st.button("Calculate 3", key="calculate_3"):
+                                calc_3 = BrokerageCalculator(buy_price_3, sell_price_3, qty_3)
+                                calc_3.deliveryEquity(days= days_3, isCashPlus=True)
         
 
-    with col4:
-        with stylable_container(
-            key='column4',
-            css_styles=""" 
+                with col4:
+                    with stylable_container(
+                key='column4',
+                css_styles=""" 
             {
                 
                 border: 0.25px solid #009688;
@@ -279,15 +296,15 @@ def main():
             }
             """,
             ):
-            with st.expander("Options"):
+                        with st.expander("Options"):
 
-                buy_price_4 = st.number_input("Enter Buy Price", key="buy_price_4")
-                sell_price_4 = st.number_input("Enter Sell Price", key="sell_price_4")
-                qty_4 = st.number_input("Enter Quantity", step=1, value=1, key="qty_4")
-                if st.button("Calculate 4", key="calculate_4"):
-                    calc_4 = BrokerageCalculator(buy_price_4, sell_price_4, qty_4)
-                    calc_4.options()
+                            buy_price_4 = st.number_input("Enter Buy Price", key="buy_price_4")
+                            sell_price_4 = st.number_input("Enter Sell Price", key="sell_price_4")
+                            qty_4 = st.number_input("Enter Quantity", step=1, value=1, key="qty_4")
+                            if st.button("Calculate 4", key="calculate_4"):
+                                calc_4 = BrokerageCalculator(buy_price_4, sell_price_4, qty_4)
+                                calc_4.options()
 
 
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+            main()
