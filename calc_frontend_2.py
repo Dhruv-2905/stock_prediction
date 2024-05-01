@@ -11,7 +11,7 @@ def get_img_as_base64(file):
         data = f.read()
     return base64.b64encode(data).decode()
 
-img = get_img_as_base64("image4.jpg")
+img = get_img_as_base64("download.png")
 
 page_bg_img = f'''
 <style>
@@ -23,7 +23,7 @@ background-size: cover;
     background: rgba(0,0,0,0)
 }}
 [data-testid="stToolbar"]{{
-    right: 2rem;
+    right: 1rem;
 }}
 </style>
 '''
@@ -155,6 +155,20 @@ class BrokerageCalculator:
         st.write(f"Net profit: {self.netProfit}")
 
 def main():
+    st.markdown(
+        """
+        <style>
+            body {
+                background-color: #2d3748;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                color: orange;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     with stylable_container(
     key='heading',
     css_styles=""" 
